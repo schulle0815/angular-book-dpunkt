@@ -1,5 +1,5 @@
 {
-    "name": "tsdemo",
+    "name": "angular-book-dpunkt",
     "version": "1.0.0",
     "description": "",
     "main": "main.js",
@@ -10,7 +10,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/schulle0815/TypeScriptTest.git"
+        "url": "https://github.com/schulle0815/angular-book-dpunkt.git"
     },
     "author": "",
     "license": "ISC",
