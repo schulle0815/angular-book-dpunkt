@@ -1,0 +1,24 @@
+{
+    "name": "tsdemo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "start": "node ./dist/src/Main.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "tslint -c tslint.json ./src/**/*.ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/schulle0815/TypeScriptTest.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^10.12.8",
+        "source-map-support": "^0.5.9",
+        "ts-node": "^7.0.1",
+        "tslint": "^5.11.0",
+        "typescript": "^3.1.6"
+    }
+}
