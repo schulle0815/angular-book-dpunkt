@@ -1,13 +1,21 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",
-    "target": "es6",
-    "module": "commonjs",
-    "outDir": "dist",
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
-    "strict": true,
-    "lib": ["es2017", "dom"]
-  },
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.spec.ts", "node_modules"]
+    "declaration": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ]
+  }
 }
