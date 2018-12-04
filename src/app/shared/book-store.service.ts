@@ -18,6 +18,7 @@ export class BookStoreService {
   }
 
   getAll(): Array<Book> {
+    console.table(this.books);
     return this.books;
   }
 
