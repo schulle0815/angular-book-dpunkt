@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+
 import {Book, Thumbnail} from '../shared/book';
 
 @Component({
@@ -7,7 +8,8 @@ import {Book, Thumbnail} from '../shared/book';
   styles: [],
 })
 export class BookListComponent implements OnInit {
-  private books: Array<Book>;
+  books: Array<Book>;
+  @Output() showBookDetailsEvent = new EventEmitter<Book>();
 
   constructor() {}
 
@@ -22,5 +24,9 @@ export class BookListComponent implements OnInit {
           [new Thumbnail('https://ng-buch.de/cover1.jpg', 'Buchcover')],
           'AngularJS ist schon toll, aber mittlerweile auch ein bischen veraltet...')
     ];
+  }
+
+  showDetails(book: Book) {
+    this.showBookDetailsEvent.emit(book);
   }
 }
