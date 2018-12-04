@@ -1,21 +1,21 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 import {Book} from '../shared/book';
+import {BookStoreService} from '../shared/book-store.service';
 
 @Component({selector: 'bm-book-details', templateUrl: './book-details.component.html', styles: []})
 export class BookDetailsComponent implements OnInit {
-  @Input() book: Book;
-  @Output() showBookListEvent = new EventEmitter<any>();
-  constructor() {}
+  book: Book;
+
+  constructor(private bookService: BookStoreService, private route: ActivatedRoute) {}
 
   getRating(num: number): Array<number> {
     return new Array<number>(num);
   }
 
-  ngOnInit() { }
-
-  showBookList()
-  {
-    this.showBookListEvent.emit();
+  ngOnInit() {
+    const params = this.route.snapshot.params;
+    this.book = this.bookService.getSingle(params['isbn']);
   }
 }
