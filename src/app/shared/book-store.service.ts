@@ -1,28 +1,47 @@
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {throwError} from 'rxjs';
+import {catchError, map, retry} from 'rxjs/operators';
+
 import {Book, Thumbnail} from '../shared/book';
+import {BookFactory} from '../shared/book-factory';
 
 @Injectable({providedIn: 'root'})
 export class BookStoreService {
+  private api = 'https://book-monkey2-api.angular-buch.com';
+  private headers: HttpHeaders = new HttpHeaders();
   books: Array<Book>;
-  constructor() {
-    this.books = [
-      new Book(
-          '9783864903571', 'Angular', ['Hans Wurst', 'Wans Hurst'], new Date(2017, 3, 1),
-          'Grundlagen, fortgeschrittene Techniken und Best Practices mit TypeScript - ab Angular 4, inkl. Native Script und Redux', 5,
-          [new Thumbnail('https://ng-buch.de/cover2.jpg', 'Buchcover')], 'Mit Angular wird alles besser!'),
-      new Book(
-          '9783864901546', 'AngularJS', ['Hans Wurst', 'Wans Hurst'], new Date(2014, 5, 29), 'eine praktische Einführung', 5,
-          [new Thumbnail('https://ng-buch.de/cover1.jpg', 'Buchcover')],
-          'AngularJS ist schon toll, aber mittlerweile auch ein bischen veraltet...'),
-    ];
+  constructor(private httpClient: HttpClient) {
+    this.headers.append('Content-Type', 'application/json');
   }
 
-  getAll(): Array<Book> {
-    console.table(this.books);
-    return this.books;
+  private apiErrorHandler(error: Error|any): Observable<any> {
+    return Observable.throw(error);
   }
 
-  getSingle(isbn: string): Book {
-    return this.books.find(b => b.isbn === isbn);
+  getAll(): Observable<Array<Book>> {
+    return this.httpClient.get(`${this.api}/books`)
+        .pipe(retry(3), catchError(this.apiErrorHandler))
+        .pipe(map(rawBooks => rawBooks.map(rawBook => BookFactory.fromObject(rawBook))));
+  }
+
+  getSingle(isbn: string): Observable<Book> {
+    return this.httpClient.get(`${this.api}/book/${isbn}`)
+        .pipe(retry(3), catchError(this.apiErrorHandler))
+        .pipe(map(rawBook => BookFactory.fromObject(rawBook)));
+  }
+
+  create(book: Book): Observable<any> {
+    return this.httpClient.post(`${this.api}/book`, JSON.stringify(book), {headers: this.headers}).pipe(catchError(this.apiErrorHandler));
+  }
+
+  update(book: Book): Observable<any> {
+    return this.httpClient.put(`${this.api}/book/${book.isbn}`, JSON.stringify(book), {headers: this.headers})
+        .pipe(catchError(this.apiErrorHandler));
+  }
+
+  remove(isbn: string): Observable<any> {
+    return this.httpClient.delete(`${this.api}/book/${isbn}`).pipe(catchError(this.apiErrorHandler));
   }
 }
