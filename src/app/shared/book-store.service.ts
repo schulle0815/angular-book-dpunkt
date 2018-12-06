@@ -26,6 +26,11 @@ export class BookStoreService {
         .pipe(map(rawBooks => rawBooks.map(rawBook => BookFactory.fromObject(rawBook))));
   }
 
+  getAllSearch(searchTerm: string): Observable<Array<Book>> {
+    return this.httpClient.get(`${this.api}/books/search/${searchTerm}`)
+        .pipe(retry(3), catchError(this.apiErrorHandler))
+        .pipe(map(rawBooks => rawBooks.map(rawBook => BookFactory.fromObject(rawBook))));
+  }
   getSingle(isbn: string): Observable<Book> {
     return this.httpClient.get(`${this.api}/book/${isbn}`)
         .pipe(retry(3), catchError(this.apiErrorHandler))

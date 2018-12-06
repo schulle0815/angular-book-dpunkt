@@ -8,6 +8,7 @@ import {BookDetailsComponent} from './book-details/book-details.component';
 import {BookListItemComponent} from './book-list-item/book-list-item.component';
 import {BookListComponent} from './book-list/book-list.component';
 import {HomeComponent} from './home/home.component';
+import {SearchComponent} from './search/search.component';
 import {BookStoreService} from './shared/book-store.service';
 
 const declarations = [
@@ -16,6 +17,7 @@ const declarations = [
   BookListItemComponent,
   BookDetailsComponent,
   HomeComponent,
+  SearchComponent,
 ];
 
 const imports =
