@@ -10,6 +10,7 @@ import {BookListComponent} from './book-list/book-list.component';
 import {HomeComponent} from './home/home.component';
 import {SearchComponent} from './search/search.component';
 import {BookStoreService} from './shared/book-store.service';
+import { ReactiveDemoComponent } from './reactive-demo/reactive-demo.component';
 
 const declarations = [
   AppComponent,
@@ -35,6 +36,7 @@ const imports =
 @NgModule({
   declarations: [
     ...declarations,
+    ReactiveDemoComponent,
   ],
   imports: [...imports],
   providers: [...services],
